@@ -10,7 +10,7 @@ import Sidebar from './Sidebar';
 
 export default function RouteSwitch(){
   return(
-    <div className='content'>
+    <>
       <Nav />
       <Sidebar />
       <BrowserRouter>
@@ -18,6 +18,6 @@ export default function RouteSwitch(){
           <Route path='/' element={<Content />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   )
 };

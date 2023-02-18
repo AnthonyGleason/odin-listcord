@@ -1,0 +1,18 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Position home page elements */
+#root{
+  height: max-content;
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-columns: 0.1fr 1fr;
+  grid-template-areas: 
+  "nav nav"
+  "sidebar content";
+}
+
+

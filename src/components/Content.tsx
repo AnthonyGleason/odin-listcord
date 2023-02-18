@@ -1,4 +1,8 @@
 import React from 'react';
+
+//import css
+import '../styles/content.css';
+
 //import components
 import ContentTrending from './Content/ContentTrending';
 import ContentPopular from './Content/ContentPopular';

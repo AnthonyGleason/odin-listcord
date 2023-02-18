@@ -11,6 +11,9 @@ import Sidebar from './Sidebar';
 //get firebase database
 import getdb from './Content/firebase';
 
+//import styling
+import '../styles/routeSwitch.css';
+
 export default function RouteSwitch(){
   /*
   const db=getdb()
@@ -20,19 +23,14 @@ export default function RouteSwitch(){
     })
   });
   */
-  
-  /*
-  set default user to anonymous user later actually fetch the data and set it to state on first startup so users
-  cant modify the data manually.
-  */
- 
+
   const [user,setUser] = useState({
     userID: 'tmNrLrMgxBzFVOov6tIv',
     admin: false,
     score: 0,
     name: 'Anonymous User',
   })
-  console.log(user);
+
   return(
     <>
       <Nav />
@@ -45,3 +43,16 @@ export default function RouteSwitch(){
     </>
   )
 };
+
+/*
+  Outline / Notes
+
+  -if the user is not an anonymous user hide the join gettit and log in button
+
+  -set default user to anonymous user later actually fetch the data and set it to state on first startup so users
+  cant modify the data manually.
+
+  -conditional rendering on the content section of the site with arguments popular or community
+  
+  -when pressing on a post the post will take up the whole bottom of the screen with replies nav will be visible on top
+*/

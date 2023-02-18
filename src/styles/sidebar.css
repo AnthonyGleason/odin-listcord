@@ -1,0 +1,12 @@
+.sidebar{
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Feed section styling */
+
+.feed-topic-container{
+  display: flex;
+  flex-direction: column;
+}

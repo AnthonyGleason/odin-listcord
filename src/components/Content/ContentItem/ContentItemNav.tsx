@@ -5,7 +5,7 @@ export default function ContentItemNav(){
     <div className='content-item-nav'>
         <div className="content-item-origin">Post Origin</div>
         <div className="content-item-date">02/17/2023</div>
-        <button className="content-join-button">Join</button>
+        <button className="content-join-button">Join This Community</button>
     </div>
   )
 }

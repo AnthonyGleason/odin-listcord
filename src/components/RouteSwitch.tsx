@@ -47,6 +47,8 @@ export default function RouteSwitch(){
 /*
   Outline / Notes
 
+  -if there is no image or image isn't grabbed display a placeholder image
+  
   -if the user is not an anonymous user hide the join gettit and log in button
 
   -set default user to anonymous user later actually fetch the data and set it to state on first startup so users

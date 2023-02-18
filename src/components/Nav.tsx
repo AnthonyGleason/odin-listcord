@@ -12,7 +12,10 @@ import smallArrow from '../assets/smallArrow.svg';
 export default function Nav(){
   return(
     <div className='nav'>
-      <img className='nav-logo' alt='gettit' src={navLogo} />
+      <div className='nav-logo-container'>
+        <img className='nav-logo' alt='gettit' src={navLogo} />
+        <div className='nav-title'>Gettit</div>
+      </div>
       <div className='search-container'>
         <img className='search-icon' alt='search icon' src={search} />
         <input placeholder='Search Gettit' />

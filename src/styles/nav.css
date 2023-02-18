@@ -11,7 +11,12 @@
 .search-container{
   display: flex;
   width: 50%;
+  gap: 10px;
 }
 .search-container input{
   width: 100%;
+}
+.nav-logo-container{
+  display: flex;
+  gap: 10px;
 }

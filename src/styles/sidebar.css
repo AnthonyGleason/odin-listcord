@@ -2,6 +2,8 @@
   grid-area: sidebar;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  margin: 10px;
 }
 
 /* Feed section styling */

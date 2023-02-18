@@ -8,3 +8,10 @@
 .nav-drop-down{
   display: none;
 }
+.search-container{
+  display: flex;
+  width: 50%;
+}
+.search-container input{
+  width: 100%;
+}

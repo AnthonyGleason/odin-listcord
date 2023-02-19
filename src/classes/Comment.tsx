@@ -1,3 +1,2 @@
-export default function Comment(){
-
+export default class Comment{
 };

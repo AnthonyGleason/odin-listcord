@@ -1,3 +1,2 @@
-export default function Post(){
-
+export default class Post{
 };

@@ -1,39 +1,29 @@
 import React from 'react';
 import {useState} from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import {getDocs, collection} from 'firebase/firestore';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import getApp from '../firebase';
 
 //import components
 import Nav from './Nav';
 import Content from './Content';
 import Sidebar from './Sidebar';
-
-//get firebase database
-import getdb from './Content/firebase';
+import SignUp from './SignUp';
 
 //import styling
 import '../styles/routeSwitch.css';
 
 export default function RouteSwitch(){
-
+  const [loggedIn,setLoggedIn] = useState(false);
   /*
-  const db=getdb()
-  getDocs(collection(db,'users')).then((snapshot)=>{
-    snapshot.docs.forEach((doc)=>{
-      console.log(doc.data());
-    })
-  });
+    const auth = getAuth(getApp());
+     signInWithEmailAndPassword(auth,'ainfortunio1@gmail.com','testtt').then((login)=>{
+     console.log(login);
+    });
   */
-
-  const [user,setUser] = useState({
-    userID: 'tmNrLrMgxBzFVOov6tIv',
-    admin: false,
-    score: 0,
-    name: 'Anonymous User',
-  })
-
   return(
     <>
+      <SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Nav />
       <Sidebar />
       <BrowserRouter>

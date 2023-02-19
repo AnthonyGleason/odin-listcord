@@ -15,6 +15,7 @@ import getdb from './Content/firebase';
 import '../styles/routeSwitch.css';
 
 export default function RouteSwitch(){
+
   /*
   const db=getdb()
   getDocs(collection(db,'users')).then((snapshot)=>{
@@ -47,6 +48,8 @@ export default function RouteSwitch(){
 /*
   Outline / Notes
 
+  -pressing on feed on the sidebar should collapse the dropdown
+  
   -if there is no image or image isn't grabbed display a placeholder image
   
   -if the user is not an anonymous user hide the join gettit and log in button

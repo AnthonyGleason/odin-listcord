@@ -15,3 +15,7 @@
 .feed-topic-container *{
   display: flex;
 }
+.feed-topic-container *:hover{
+  cursor: pointer;
+  background-color: aliceblue;
+}

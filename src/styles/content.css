@@ -93,10 +93,27 @@
   display: flex;
   margin: 5px;
 }
+.content-upvote,
+.content-downvote,
+.content-item-origin,
+.content-item-footer-comments,
+.content-item-share,
+.content-item-save,
+.popular-nav-item{
+  cursor: pointer;
+}
 .community{
   list-style: none;
+}
+.community-item:hover{
+  cursor: pointer;
+  background-color: aliceblue;
 }
 .copyright-info{
   display: flex;
   flex-direction: column;
+}
+.copyright-info *:hover{
+  cursor: pointer;
+  background-color: aliceblue;
 }

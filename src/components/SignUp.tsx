@@ -1,6 +1,15 @@
 import React from 'react';
+import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
 
 export default function SignUp({loggedIn,setLoggedIn}:any){
+   /*
+    const auth = getAuth(getApp());
+     signInWithEmailAndPassword(auth,'ainfortunio1@gmail.com','testtt').then((login)=>{
+     console.log(login);
+    });
+  */
+
+  //conditional rendering
   if (loggedIn===true){
     return(<></>)
   }else{
@@ -20,6 +29,6 @@ export default function SignUp({loggedIn,setLoggedIn}:any){
   }
 }
 
-let handleSignIn = function(setLoggedIn: any){
+let handleSignIn = function(setLoggedIn: any):void{
   setLoggedIn(true);
 }

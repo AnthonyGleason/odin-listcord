@@ -1,7 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import getApp from '../firebase';
 
 //import components
@@ -15,12 +14,7 @@ import '../styles/routeSwitch.css';
 
 export default function RouteSwitch(){
   const [loggedIn,setLoggedIn] = useState(false);
-  /*
-    const auth = getAuth(getApp());
-     signInWithEmailAndPassword(auth,'ainfortunio1@gmail.com','testtt').then((login)=>{
-     console.log(login);
-    });
-  */
+ 
   return(
     <>
       <SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />

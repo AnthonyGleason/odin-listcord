@@ -1,14 +1,11 @@
 import React from 'react';
-import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
+import {useState} from 'react';
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
 
-export default function SignUp({loggedIn,setLoggedIn}:any){
-   /*
-    const auth = getAuth(getApp());
-     signInWithEmailAndPassword(auth,'ainfortunio1@gmail.com','testtt').then((login)=>{
-     console.log(login);
-    });
-  */
-
+export default function SignUp({loggedIn,setLoggedIn,auth}:any){
+  const [userInput, setUserInput] = useState('');
+  const [passInput, setPassInput] = useState('');
+  const [message, setMessage] = useState('');
   //conditional rendering
   if (loggedIn===true){
     return(<></>)
@@ -17,11 +14,11 @@ export default function SignUp({loggedIn,setLoggedIn}:any){
       <div className='fade'>
         <form className='sign-up'>
           <label>Username: </label>
-          <input />
+          <input value={userInput} onChange={(e)=>{setUserInput(e.target.value)}} />
           <label>Password: </label>
-          <input />
-          <div className='sign-in-message'></div>
-          <button onClick={()=>{handleSignIn(setLoggedIn)}} type='button'>Sign In!</button>
+          <input value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} />
+          <div className='sign-in-message'>{message}</div>
+          <button onClick={()=>{handleSignIn(setLoggedIn,auth,userInput,passInput,setMessage)}} type='button'>Sign In!</button>
           <button type='button'>Sign Up!</button>
         </form>
       </div>
@@ -29,6 +26,12 @@ export default function SignUp({loggedIn,setLoggedIn}:any){
   }
 }
 
-let handleSignIn = function(setLoggedIn: any):void{
-  setLoggedIn(true);
+let handleSignIn = async function(setLoggedIn:any,auth: any, username:string,password:string,setMessage:any){
+  try{
+    let login = await signInWithEmailAndPassword(auth,username,password);
+    console.log(login);
+    setLoggedIn(true);
+  }catch(e){
+    setMessage('Credentials are incorrect or account does not exist');
+  }
 }

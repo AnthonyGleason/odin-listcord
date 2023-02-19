@@ -16,7 +16,7 @@ export default function SignUp({loggedIn,setLoggedIn,auth}:any){
           <label>Username: </label>
           <input value={userInput} onChange={(e)=>{setUserInput(e.target.value)}} />
           <label>Password: </label>
-          <input value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} />
+          <input type='password' value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} />
           <div className='sign-in-message'>{message}</div>
           <button onClick={()=>{handleSignIn(setLoggedIn,auth,userInput,passInput,setMessage)}} type='button'>Sign In!</button>
           <button type='button'>Sign Up!</button>
@@ -29,7 +29,7 @@ export default function SignUp({loggedIn,setLoggedIn,auth}:any){
 let handleSignIn = async function(setLoggedIn:any,auth: any, username:string,password:string,setMessage:any){
   try{
     let login = await signInWithEmailAndPassword(auth,username,password);
-    console.log(login);
+    console.log(login,' has signed in!');
     setLoggedIn(true);
   }catch(e){
     setMessage('Credentials are incorrect or account does not exist');

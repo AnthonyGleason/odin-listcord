@@ -4,6 +4,9 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import getApp from '../firebase';
 import {getAuth} from 'firebase/auth';
 
+//import classes
+import User from '../classes/User';
+
 //import components
 import Nav from './Nav';
 import Content from './Content';
@@ -14,8 +17,14 @@ import SignUp from './SignUp';
 import '../styles/routeSwitch.css';
 
 export default function RouteSwitch(){
-  const [loggedIn,setLoggedIn] = useState(false);
+  //get firebase auth for firebase services
   const auth = getAuth(getApp());
+
+  //create state for signed in user
+  const [loggedIn,setLoggedIn] = useState(false);
+
+  const [currentUser,setCurrentUser]= useState(new User(false,'',0,'','',false));
+  
   return(
     <>
       <SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} auth={auth} />

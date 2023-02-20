@@ -22,7 +22,6 @@ export function getdb(){
   const db = getFirestore(getApp());
   return db;
 }
-
 /*
   const db=getdb()
   getDocs(collection(db,'users')).then((snapshot)=>{

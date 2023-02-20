@@ -32,6 +32,8 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  height: max-content;
+  width: 25%;
 }
 .sign-up *{
   padding: 5px;

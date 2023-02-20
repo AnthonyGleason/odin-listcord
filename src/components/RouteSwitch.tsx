@@ -21,13 +21,11 @@ export default function RouteSwitch(){
   const auth = getAuth(getApp());
 
   //create state for signed in user
-  const [loggedIn,setLoggedIn] = useState(false);
+  const [currentUser,setCurrentUser] = useState(new User('',0,'',false));
 
-  const [currentUser,setCurrentUser]= useState(new User(false,'',0,'','',false));
-  
   return(
     <>
-      <SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} auth={auth} />
+      <SignUp currentUser={currentUser} setCurrentUser={setCurrentUser} auth={auth} />
       <Nav />
       <Sidebar />
       <BrowserRouter>

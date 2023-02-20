@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-import RouteSwitch from './components/RouteSwitch';
 import reportWebVitals from './reportWebVitals';
-
+import RouteSwitch from './components/RouteSwitch';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

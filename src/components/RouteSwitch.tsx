@@ -1,55 +1,26 @@
 import React from 'react';
 import {useState} from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import getApp from '../firebase';
-import {getAuth} from 'firebase/auth';
-
-//import classes
-import User from '../classes/User';
-
-//import components
-import Nav from './Nav';
-import Content from './Content';
-import Sidebar from './Sidebar';
 import SignUp from './SignUp';
 
-//import styling
-import '../styles/routeSwitch.css';
+//import components
+import App from './App';
 
 export default function RouteSwitch(){
-  //get firebase auth for firebase services
-  const auth = getAuth(getApp());
+  //logged in statedetermines conditional rendering of sign in page
+  const [loggedIn,setLoggedIn] = useState(false);
 
-  //create state for signed in user
-  const [currentUser,setCurrentUser] = useState(new User('',0,'',false));
-
-  return(
-    <>
-      <SignUp currentUser={currentUser} setCurrentUser={setCurrentUser} auth={auth} />
-      <Nav />
-      <Sidebar />
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Content />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
-};
-
-/*
-  Outline / Notes
-
-  -pressing on feed on the sidebar should collapse the dropdown
-  
-  -if there is no image or image isn't grabbed display a placeholder image
-  
-  -if the user is not an anonymous user hide the join gettit and log in button
-
-  -set default user to anonymous user later actually fetch the data and set it to state on first startup so users
-  cant modify the data manually.
-
-  -conditional rendering on the content section of the site with arguments popular or community
-  
-  -when pressing on a post the post will take up the whole bottom of the screen with replies nav will be visible on top
-*/
+  if (loggedIn===false) return (<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />);
+  //else return the app  
+  else{
+    return(
+      <div className='content'>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<App />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    )
+  };
+}

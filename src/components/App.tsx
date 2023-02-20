@@ -1,49 +1,12 @@
 import React from "react";
 
+//import components
+import ChannelContainer from "./ChannelContainer";
 export default function App(){
   return(
     <div className='app'>
       <div className="sidebar">
-        <div className="sidebar-left">
-          {/*map is called on a channel item container to render channel items the user participates in*/}
-          <div className="channel-container">
-            <div className="channel-item">
-              <img className="channel-picture" alt="channel" />
-              <div className="channel-name">Channel A</div>
-            </div>
-            <div className="channel-item">
-              <img className="channel-picture" alt="channel" />
-              <div className="channel-name">Channel B</div>
-            </div>
-            <div className="channel-item">
-              <img className="channel-picture" alt="channel" />
-              <div className="channel-name">Channel C</div>
-            </div>
-            <div className="channel-item">
-              <img className="channel-picture" alt="channel" />
-              <div className="channel-name">Channel D</div>
-            </div>
-            <div className="channel-item">
-              <img className="channel-picture" alt="channel" />
-              <div className="channel-name">Channel E</div>
-            </div>
-            {/* this unique channel item allows for creation of new channels which are searchable by other users */}
-            <div className="channel-item">
-              <img className="channel-picture" alt="plus, add symbol" />
-              <div className="channel-name">New Channel</div>
-              <div className="fade">
-                <form className="find-channel">
-                  <input className="find-channel-input" placeholder="Enter a channel" />
-                  <div className="find-channel-message">
-                    {/* Displays error messages such as channel doesn't exist */}
-                  </div>
-                  <button className="find-channel-submit">Search</button>
-                  <button className="find-channel-close">Close</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ChannelContainer />
         <div className="sidebar-right">
           <div className="dm-container">
             <div className="dm-nav">
@@ -85,6 +48,11 @@ export default function App(){
           <div className="content-nav">
             {/* Displays either the selected channel or current user */}
             <div className="nav-title">Channel / User Name</div>
+            {/* 
+              Renders button text condtionally based on if the current selection is a DM or channel.
+              Allows the user to close dm or leave channel.
+            */}
+            <button>Close DM / Leave Channel</button>
           </div>
           <div className="content-body">
             {/* Displays all messages in the channel*/}

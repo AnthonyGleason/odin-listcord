@@ -10,6 +10,14 @@
 .channel-item{
   display: flex;
 }
+.channel-picture{
+  height: 50px;
+  width: 50px;
+}
+.current-user-pic{
+  height: 50px;
+  width: 50px;
+}
 .channel-name,
 .fade{
   display: none;
@@ -21,10 +29,13 @@
 .dm-container{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 .dm-item{
   display: flex;
+}
+.dm-user-pic{
+  height: 50px;
+  width: 50px;
 }
 .dm-footer{
   display: flex;

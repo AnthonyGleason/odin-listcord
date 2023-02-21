@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 
+import placeholderPic from '../assets/placeholder.png';
 //import components
 import DMItem from './DMItem';
 
@@ -28,7 +29,7 @@ export default function DMContainer(){
         <DMItem />
       </div>
       <div className="dm-footer">
-        <img className="current-user-pic" alt="current user's added account img "/>
+        <img src={placeholderPic} className="current-user-pic" alt="current user's added account img "/>
         <div className="current-username">Current signed in user</div>
       </div>
     </div>

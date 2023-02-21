@@ -14,6 +14,8 @@
 }
 .message-profile-pic{
   grid-area: profilepic;
+  height: 50px;
+  width: 50px;
 }
 .message-author{
   grid-area: name;

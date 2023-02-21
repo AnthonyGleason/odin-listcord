@@ -9,7 +9,8 @@ import App from './App';
 export default function RouteSwitch(){
   //logged in statedetermines conditional rendering of sign in page
   const [loggedIn,setLoggedIn] = useState(false);
-
+  const [currentUser,setCurrentUser] = useState('');
+  
   if (loggedIn===false) return (<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />);
   //else return the app  
   else{

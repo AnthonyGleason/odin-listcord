@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/content.css';
-
+import placeholderPic from '../assets/placeholder.png';
 export default function Content(){
   return(
     <div className="content">
@@ -18,7 +18,7 @@ export default function Content(){
         <div className="message-container">
           {/* Messages show the authors profile picture, name, timestamp and message content */}
           <div className="message">
-            <img className="message-profile-pic" alt="message profile pic"/>
+            <img src={placeholderPic} className="message-profile-pic" alt="message profile pic"/>
             <div className="message-author">Admin</div>
             <div className="message-timestamp">02/20/2023 3:09pm</div>
             <div className="message-content">Hello World!</div>

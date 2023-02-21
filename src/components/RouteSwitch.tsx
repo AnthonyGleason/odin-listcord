@@ -14,13 +14,13 @@ export default function RouteSwitch(){
   //else return the app  
   else{
     return(
-      <div className='content'>
+      <>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<App />} />
           </Routes>
         </BrowserRouter>
-      </div>
+      </>
     )
   };
 }

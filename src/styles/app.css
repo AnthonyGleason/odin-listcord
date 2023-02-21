@@ -1,0 +1,31 @@
+.app{
+  width: 100%;
+  height: max-content;
+  display: flex;
+}
+.sidebar{
+  height: 100vh;
+  display: flex;
+}
+.channel-item{
+  display: flex;
+}
+.channel-name,
+.fade{
+  display: none;
+}
+.content{
+  height: 100%;
+  width: 100%;
+}
+.dm-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dm-item{
+  display: flex;
+}
+.dm-footer{
+  display: flex;
+}

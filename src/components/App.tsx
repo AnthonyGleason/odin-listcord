@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../styles/app.css';
 //import components
 import ChannelContainer from "./ChannelContainer";
 import DMContainer from "./DMContainer";

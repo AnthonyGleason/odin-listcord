@@ -15,8 +15,7 @@ export default function ChannelContainer(){
       <ChannelItem />
       {/* this unique channel item allows for creation of new channels which are searchable by other users */}
       <div className="channel-item">
-        <img className="channel-picture" alt="plus, add symbol" />
-        <div className="channel-name">New Channel</div>
+        <div className="channel-new">+</div>
         <div className="fade">
           <form className="find-channel">
             <input value={channelInput} onChange={(e)=>{setChannelInput(e.target.value)}} className="find-channel-input" placeholder="Enter a channel" />

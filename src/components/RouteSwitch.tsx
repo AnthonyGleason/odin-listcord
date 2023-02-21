@@ -5,15 +5,18 @@ import SignUp from './SignUp';
 
 //import components
 import App from './App';
+import User from '../classes/User';
 
 export default function RouteSwitch(){
   //logged in statedetermines conditional rendering of sign in page
   const [loggedIn,setLoggedIn] = useState(false);
-  const [currentUser,setCurrentUser] = useState('');
+  //sets currnet user to be the default user
+  const [currentUser,setCurrentUser] = useState(new User('wd74Gx1fshc3mXVwZYsO0vGtfsz2'));
   
-  if (loggedIn===false) return (<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />);
+  if (loggedIn===false) return (<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />);
   //else return the app  
   else{
+    console.log(currentUser, 'current user');
     return(
       <>
         <BrowserRouter>

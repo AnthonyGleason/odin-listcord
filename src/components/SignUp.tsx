@@ -2,8 +2,9 @@ import React from 'react';
 import {useState} from 'react';
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
 import getApp from '../firebase';
+import User from '../classes/User';
 
-export default function SignUp({loggedIn,setLoggedIn}:any){
+export default function SignUp({loggedIn,setLoggedIn,setCurrentUser}:any){
   //set input states
   const [userInput, setUserInput] = useState('');
   const [passInput, setPassInput] = useState('');
@@ -18,25 +19,26 @@ export default function SignUp({loggedIn,setLoggedIn}:any){
         <label>Password: </label>
         <input type='password' value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} />
         <div className='sign-in-message'>{message}</div>
-        <button onClick={()=>{handleSignIn(setLoggedIn,userInput,passInput,setMessage)}} type='button'>Sign In!</button>
+        <button onClick={()=>{handleSignIn(setLoggedIn,userInput,passInput,setMessage,setCurrentUser)}} type='button'>Sign In!</button>
         <button onClick={()=>{handleSignUp(userInput,passInput,setMessage)}} type='button'>Sign Up!</button>
-        <button onClick={()=>{handleDemoUserSignIn(setLoggedIn,setMessage)}} type='button'>Demo User</button>
+        <button onClick={()=>{handleDemoUserSignIn(setLoggedIn,setMessage,setCurrentUser)}} type='button'>Demo User</button>
       </form>
     </div>
   )
 };
 //signs in with a default demo user which has a few default friends and channels to get started
-let handleDemoUserSignIn = async function(setLoggedIn: any,setMessage: any){
+let handleDemoUserSignIn = async function(setLoggedIn: any,setMessage: any,setCurrentUser: any){
   const auth = getAuth(getApp());
   try{
-    await signInWithEmailAndPassword(auth,'demouser@demouser.com','demouser');
+    let login = await signInWithEmailAndPassword(auth,'demouser@demouser.com','demouser');
+    await setCurrentUser(new User(login.user.uid));
     setLoggedIn(true);
   }catch{
     setMessage('An error has occured please try signing in again.');
   }
 };
 //signs in with a user with an email and password. sets login to true after sucessfull sign in to trigger home page render
-let handleSignIn = async function(setLoggedIn:any,userInput: string, passInput: string,setMessage: any){
+let handleSignIn = async function(setLoggedIn:any,userInput: string, passInput: string,setMessage: any,setCurrentUser: any){
   const auth = getAuth(getApp());
   try{
     await signInWithEmailAndPassword(auth,userInput,passInput);

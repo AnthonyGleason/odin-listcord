@@ -25,16 +25,25 @@ export default function App({currentUser,setCurrentUser}:any){
 }
 
 let handleSignIn = async function(user: string,pass: string,register:boolean,setCurrentUser:any){
-  //logins in or creates a new user based on the register boolean passed
+  const userRef = collection(database,'users');
   let login: any;
+  
+  //logins in or creates a new user based on the register boolean passed
   if (register===true){
+    //create a new user
     login = await createUserWithEmailAndPassword(auth,user,pass);
+    //create a doc in the users collection for this new user
+    addDoc(userRef,{
+      UID: login.user.uid,
+      joinedChannels: [],
+      sentMessages: [],
+      username: login.user.email,
+    });
   }else{
     login = await signInWithEmailAndPassword(auth,user,pass);
   }
 
   //user is now logged in and userdata will be retrieved from firebase
-  const userRef = collection(database,'users');
   const currentUserQuery = query(userRef, where('UID',"==",login.user.uid));
   const currentUserSnapshot = await getDocs(currentUserQuery);
   

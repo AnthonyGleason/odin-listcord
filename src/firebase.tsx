@@ -12,13 +12,13 @@ const firebaseConfig: object = {
   measurementId: "G-P1VPZ0VPKQ"
 };
 
-export default function getApp(){
+export function getApp(){
   //initalize the firebase app with the config
   const app = initializeApp(firebaseConfig);
   return app;
 }
-export function getdb(){
+export default function getdb(){
   //get the current database
-  const db = getFirestore(getApp());
+  const db:any = getFirestore(getApp());
   return db;
 }

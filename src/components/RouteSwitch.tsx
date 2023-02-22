@@ -11,7 +11,7 @@ export default function RouteSwitch(){
   //logged in statedetermines conditional rendering of sign in page
   const [loggedIn,setLoggedIn] = useState(false);
   //sets currnet user to be the default user
-  const [currentUser,setCurrentUser] = useState(new User('wd74Gx1fshc3mXVwZYsO0vGtfsz2'));
+  const [currentUser,setCurrentUser] = useState(undefined);
   
   if (loggedIn===false) return (<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />);
   //else return the app  

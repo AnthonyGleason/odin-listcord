@@ -1,17 +1,11 @@
 export default class User{
   UID: string;
-  constructor(userUID: string){
+  channelArray: any[];
+  dmArray: any[];
+  
+  constructor(userUID: string,channelArray: any[],dmArray: any[]){
     this.UID=userUID;
-    this.getUserInfo(userUID);
+    this.channelArray=channelArray;
+    this.dmArray=dmArray;
   };
-  getUserInfo(userUID: string){
-    this.getUserChannels(userUID);
-    this.getUserDMS(userUID);
-  }
-  getUserChannels(userUID: string){
-
-  }
-  getUserDMS(userUID: string){
-
-  }
 }

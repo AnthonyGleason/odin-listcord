@@ -3,6 +3,14 @@ import {useState} from 'react';
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
 import getApp from '../firebase';
 import User from '../classes/User';
+//import classes
+
+import Dm from '../classes/Dm';
+import Message from '../classes/Message';
+import Channel from '../classes/Channel';
+
+import {collection,getDocFromCache,query,where} from 'firebase/firestore';
+import getdb from '../firebase';
 
 export default function SignUp({loggedIn,setLoggedIn,setCurrentUser}:any){
   //set input states
@@ -10,7 +18,6 @@ export default function SignUp({loggedIn,setLoggedIn,setCurrentUser}:any){
   const [passInput, setPassInput] = useState('');
   //messages show near the sign in button when there are errors with sign in
   const [message, setMessage] = useState('');
-
   return(
     <div className='sign-up-container'>
       <form className='sign-up'>
@@ -26,17 +33,21 @@ export default function SignUp({loggedIn,setLoggedIn,setCurrentUser}:any){
     </div>
   )
 };
+
 //signs in with a default demo user which has a few default friends and channels to get started
 let handleDemoUserSignIn = async function(setLoggedIn: any,setMessage: any,setCurrentUser: any){
   const auth = getAuth(getApp());
   try{
     let login = await signInWithEmailAndPassword(auth,'demouser@demouser.com','demouser');
-    await setCurrentUser(new User(login.user.uid));
+    let channelArray = getChannelArray(login.user.uid);
+    let dmArray = await getDmArray(login.user.uid);
+    setCurrentUser(new User(login.user.uid, channelArray, dmArray));
     setLoggedIn(true);
   }catch{
     setMessage('An error has occured please try signing in again.');
   }
 };
+
 //signs in with a user with an email and password. sets login to true after sucessfull sign in to trigger home page render
 let handleSignIn = async function(setLoggedIn:any,userInput: string, passInput: string,setMessage: any,setCurrentUser: any){
   const auth = getAuth(getApp());
@@ -47,6 +58,7 @@ let handleSignIn = async function(setLoggedIn:any,userInput: string, passInput: 
   }
   setLoggedIn(true);
 };
+
 //signs up a user with an email and password
 let handleSignUp = async function(userInput: string, passInput: string,setMessage: any){
   const auth = getAuth(getApp());
@@ -55,5 +67,16 @@ let handleSignUp = async function(userInput: string, passInput: string,setMessag
   }catch{
     setMessage('An account may already exists with this email.');
   }
-  
+};
+
+let getChannelArray = function(userUID: string){
+  let channelArray:any[] = [];
+  const db: any = getdb();
+  console.log(db);
+  return channelArray;
+};
+
+let getDmArray = function(userUID: string){
+  let dmArray: any = [];
+  return dmArray;
 };

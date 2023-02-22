@@ -4,10 +4,19 @@ import {database} from '../firebaseConfig';
 import ChannelContainer from './ChannelContainer';
 import ChannelClass from "../classes/Channel";
 import Message from "../classes/Message";
-import { updateCurrentUser } from "firebase/auth";
+import userEvent from "@testing-library/user-event";
+import MessageContainer from "./MessageContainer";
 
 export default function App({currentUser,setCurrentUser}:any){
+  //messages are retrieved dependening on selectedChannel
+  //set channel, selected channel and message array states;
   const [channelArray,setChannelArray]=useState([]);
+  const [selectedChannel,setSelectedChannel]=useState('none');
+  const [messageArray,setMessageArray]=useState([]);
+  
+  useEffect(()=>{
+    getMessages(selectedChannel,setMessageArray);
+  },[selectedChannel]);
 
   useEffect(()=>{
     getChannels(currentUser,setChannelArray);
@@ -16,7 +25,7 @@ export default function App({currentUser,setCurrentUser}:any){
   return(
     <div className='app'>
       <div className="sidebar">
-        <ChannelContainer channelArray={channelArray} />
+        <ChannelContainer setSelectedChannel={setSelectedChannel} channelArray={channelArray} />
         <div className="sidebar-right">
           <div className="dm-container">
             <div className="dm-nav">
@@ -61,15 +70,7 @@ export default function App({currentUser,setCurrentUser}:any){
           </div>
           <div className="content-body">
             {/* Displays all messages in the channel*/}
-            <div className="message-container">
-              {/* Messages show the authors profile picture, name, timestamp and message content */}
-              <div className="message">
-                <img className="message-profile-pic" alt="message profile pic"/>
-                <div className="message-author">Admin</div>
-                <div className="message-send-time">02/20/2023 3:09pm</div>
-                <div className="message-content">Hello World!</div>
-              </div>
-            </div>
+            <MessageContainer messageArray={messageArray} key={Math.random()} />
             {/* allows the user to create new messages and sends them to the current selected channel or user */}
             <div className="message-footer">
               <input className='new-message-input' placeholder="Type a message here!"/>
@@ -81,8 +82,25 @@ export default function App({currentUser,setCurrentUser}:any){
   )
 }
 
+let getMessageInfo = async function(messageQuery:any,setMessageArray: any){
+  let response: any = await getDocs(messageQuery);
+  response.docs.map((r:any)=>{
+    setMessageArray([{
+      channel: r.data().channel,
+      text: r.data().text,
+      user: r.data().user,
+      username: r.data().username,
+    }])
+  })
+}
+
+let getMessages = function(selectedChannel: string, setMessageArray: any){
+  //populate messageArray with doc ids
+  let messageQuery = query(collection(database,'messages'),where('channel','==',selectedChannel));
+  getMessageInfo(messageQuery,setMessageArray);
+}
+
 let getChannelInfo = async function(channelQuery:any,setChannelArray: any){
-  let tempData:any;
   let response:any = await getDocs(channelQuery);
   response.docs.map((r:any)=>{
     setChannelArray([{
@@ -91,7 +109,6 @@ let getChannelInfo = async function(channelQuery:any,setChannelArray: any){
       userArray: r.data().userArray,
     }])
   })
-  return tempData;
 };
 
 let getChannels = function(user: any,setChannelArray:any){

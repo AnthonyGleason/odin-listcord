@@ -1,12 +1,11 @@
 import React from 'react';
 import Channel from '../components/Channel';
-export default function ChannelContainer({channelArray}:any){
-  console.log(channelArray);
+export default function ChannelContainer({setSelectedChannel,channelArray}:any){
   return(
     <div className="channel-container">
       {
         channelArray.map((channel:any)=>{
-          return(<Channel key={Math.random()} channelName={channel.channelName} />)
+          return(<Channel setSelectedChannel={setSelectedChannel} channelName={channel.channelName} key={Math.random()} />)
         })
       }
       {/* this unique channel item allows for creation of new channels which are searchable by other users */}

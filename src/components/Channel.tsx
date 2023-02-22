@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Channel({channelName}: any){
+export default function Channel({setSelectedChannel,channelName}: any){
   return(
     <div className="channel-item">
-      <div className="channel-name">{channelName}</div>
+      <div onClick={()=>{setSelectedChannel(channelName)}} className="channel-name">{channelName}</div>
     </div>
   )
 }

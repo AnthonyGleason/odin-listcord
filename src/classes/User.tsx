@@ -1,11 +1,13 @@
 export default class User{
-  UID: string;
-  channelArray: any[];
-  dmArray: any[];
-  
-  constructor(userUID: string,channelArray: any[],dmArray: any[]){
-    this.UID=userUID;
-    this.channelArray=channelArray;
-    this.dmArray=dmArray;
-  };
+  UID:string;
+  joinedChannels: any[];
+  sentMessages:any[];
+  username:string;
+
+  constructor(UID:string,joinedChannels:any[],sentMessages:any[],username:string){
+    this.UID= UID;
+    this.joinedChannels= joinedChannels;
+    this.sentMessages= sentMessages;
+    this.username= username;
+  }
 }

@@ -1,19 +1,22 @@
 import React from 'react';
 import {useState} from 'react';
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import SignUp from './SignUp';
+import App from '../components/App';
 
-//import components
-import App from './App';
 export default function RouteSwitch(){
-  const [currentUser,setCurrentUser] = useState('');
-  return(
-    <>
-      <button onClick={()=>{console.log(currentUser)}}>pressme</button>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<App setCurrentUser={setCurrentUser} />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+  const [currentUser,setCurrentUser] = useState(null);
+  if (currentUser===null){
+    return(
+      <>
+        <SignUp setCurrentUser={setCurrentUser} />
+      </>
+    )
+  }else{
+    return(
+      <>
+        <App currentUser={currentUser} setCurrentUser={setCurrentUser}  />
+      </>
+    )
+  }
+  
 }

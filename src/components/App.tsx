@@ -1,57 +1,103 @@
-import React from 'react';
-import {useState} from 'react';
-import {app, database} from '../firebaseConfig';
+import React, {useEffect, useState} from "react";
 import {collection, addDoc , getDocs,query,where} from 'firebase/firestore';
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
-import User from '../classes/User';
-
-const auth = getAuth(app)
+import {database} from '../firebaseConfig';
+import ChannelContainer from './ChannelContainer';
+import ChannelClass from "../classes/Channel";
+import Message from "../classes/Message";
+import { updateCurrentUser } from "firebase/auth";
 
 export default function App({currentUser,setCurrentUser}:any){
-  const [userInput,setUserInput] = useState('');
-  const [passInput,setPassInput] = useState('');
+  const [channelArray,setChannelArray]=useState([]);
+
+  useEffect(()=>{
+    getChannels(currentUser,setChannelArray);
+  },[currentUser]);
 
   return(
-    <div className="app">
-      <form>
-        <input value={userInput} onChange={(e)=>{setUserInput(e.target.value)}} placeholder='username' />
-        <input value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} placeholder='password' />
-        <button onClick={()=>{handleSignIn(userInput,passInput,false,setCurrentUser)}} type='button'>Sign In</button>
-        <button onClick={()=>{handleSignIn(userInput,passInput,true,setCurrentUser)}} type='button'>Sign Up</button>
-        <button onClick={()=>{handleSignIn('demouser@demouser.com','demouser',false,setCurrentUser)}} type='button'>Use Demo User</button>
-      </form>
+    <div className='app'>
+      <div className="sidebar">
+        <ChannelContainer channelArray={channelArray} />
+        <div className="sidebar-right">
+          <div className="dm-container">
+            <div className="dm-nav">
+              <div className="dm-title">Direct Messages</div>
+              <div className="dm-new">+</div>
+              <div className="fade">
+                <form className="find-user">
+                  <input className="find-user-input" placeholder="Enter a username" />
+                  <div className="find-user-message">
+                    {/* Displays error messages such as user doesn't exist */}
+                  </div>
+                  <button className="find-user-submit">Search</button>
+                  <button className="find-user-close">Close</button>
+                </form>
+              </div>
+            </div>
+            <div className="dm-body">
+              <div className="dm-item">
+                <img className="dm-user-pic" alt='a user added account img' />
+                <div className="dm-user-acc">A User</div>
+              </div>
+              <div className="dm-item">
+                <img className="dm-user-pic" alt='a user added account img' />
+                <div className="dm-user-acc">A User</div>
+              </div>
+              <div className="dm-item">
+                <img className="dm-user-pic" alt='a user added account img' />
+                <div className="dm-user-acc">A User</div>
+              </div>
+            </div>
+            <div className="dm-footer">
+              <img className="current-user-pic" alt="current user's added account img "/>
+              <div className="current-username">Current signed in user</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content">
+          <div className="content-nav">
+            {/* Displays either the selected channel or current user */}
+            <div className="nav-title">Channel / User Name</div>
+          </div>
+          <div className="content-body">
+            {/* Displays all messages in the channel*/}
+            <div className="message-container">
+              {/* Messages show the authors profile picture, name, timestamp and message content */}
+              <div className="message">
+                <img className="message-profile-pic" alt="message profile pic"/>
+                <div className="message-author">Admin</div>
+                <div className="message-send-time">02/20/2023 3:09pm</div>
+                <div className="message-content">Hello World!</div>
+              </div>
+            </div>
+            {/* allows the user to create new messages and sends them to the current selected channel or user */}
+            <div className="message-footer">
+              <input className='new-message-input' placeholder="Type a message here!"/>
+              <button>Send</button>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }
 
-let handleSignIn = async function(user: string,pass: string,register:boolean,setCurrentUser:any){
-  const userRef = collection(database,'users');
-  let login: any;
-  
-  //logins in or creates a new user based on the register boolean passed
-  if (register===true){
-    //create a new user
-    login = await createUserWithEmailAndPassword(auth,user,pass);
-    //create a doc in the users collection for this new user
-    addDoc(userRef,{
-      UID: login.user.uid,
-      joinedChannels: [],
-      sentMessages: [],
-      username: login.user.email,
-    });
-  }else{
-    login = await signInWithEmailAndPassword(auth,user,pass);
-  }
-
-  //user is now logged in and userdata will be retrieved from firebase
-  const currentUserQuery = query(userRef, where('UID',"==",login.user.uid));
-  const currentUserSnapshot = await getDocs(currentUserQuery);
-  
-  currentUserSnapshot.forEach((doc)=>{
-    let UID:string = doc.data().UID;
-    let joinedChannels:any = doc.data().joinedChannels;
-    let sentMessages:any = doc.data().sentMessages;
-    let username: string = doc.data().username;
-    setCurrentUser(new User(UID,joinedChannels,sentMessages,username));
+let getChannelInfo = async function(channelQuery:any,setChannelArray: any){
+  let tempData:any;
+  let response:any = await getDocs(channelQuery);
+  response.docs.map((r:any)=>{
+    setChannelArray([{
+      channelName: r.data().channelName,
+      messageArray: r.data().messageArray,
+      userArray: r.data().userArray,
+    }])
   })
+  return tempData;
+};
+
+let getChannels = function(user: any,setChannelArray:any){
+  //populate channelArray with doc ids
+  user.joinedChannels.forEach((channelDocID: string)=>{
+    let channelQuery = query(collection(database,'channels'), where('__name__','==',channelDocID));
+    getChannelInfo(channelQuery,setChannelArray);
+  });
 };

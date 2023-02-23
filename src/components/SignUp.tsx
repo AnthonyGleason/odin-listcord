@@ -14,6 +14,7 @@ export default function SignUp({currentUser,setCurrentUser}:any){
   return(
     <div className="app">
       <form>
+        <div>Please Login</div>
         <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} placeholder='email' />
         <input value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} placeholder='password' />
         <button onClick={()=>{handleSignIn(emailInput,passInput,false,setCurrentUser)}} type='button'>Sign In</button>

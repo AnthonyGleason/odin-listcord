@@ -1,6 +1,7 @@
 import React from 'react';
 import Channel from '../components/Channel';
 export default function ChannelContainer({setSelectedChannel,channelArray}:any){
+  console.log(channelArray);
   return(
     <div className="channel-container">
       {

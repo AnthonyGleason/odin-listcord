@@ -13,8 +13,10 @@ export default function App({currentUser,setCurrentUser}:any){
   const [channelArray,setChannelArray]=useState([]);
   const [selectedChannel,setSelectedChannel]=useState('none');
   const [messageArray,setMessageArray]=useState([]);
-  
+  const [newMessageInput, setNewMessageInput] = useState('');
+
   useEffect(()=>{
+    setMessageArray([]);
     getMessages(selectedChannel,setMessageArray);
   },[selectedChannel]);
 
@@ -73,8 +75,8 @@ export default function App({currentUser,setCurrentUser}:any){
             <MessageContainer messageArray={messageArray} key={Math.random()} />
             {/* allows the user to create new messages and sends them to the current selected channel or user */}
             <div className="message-footer">
-              <input className='new-message-input' placeholder="Type a message here!"/>
-              <button>Send</button>
+              <input className='new-message-input' value={newMessageInput} onChange={(e)=>{setNewMessageInput(e.target.value)}} placeholder="Type a message here!"/>
+              <button className='send-button' onClick={()=>{handleMessageSend(newMessageInput,currentUser,selectedChannel,setMessageArray)}}>Send</button>
             </div>
           </div>
         </div>
@@ -82,20 +84,35 @@ export default function App({currentUser,setCurrentUser}:any){
   )
 }
 
+let handleMessageSend = function(message:string,currentUser:any,selectedChannel:string,setMessageArray:any){
+  addDoc(collection(database,'messages'),{
+    channel: selectedChannel,
+    text: message,
+    user: currentUser.UID,
+    username: currentUser.username,
+  })
+  //update state
+  setMessageArray((prev:any)=>prev.concat([{
+    channel: selectedChannel,
+    text: message,
+    user: currentUser.UID,
+    username: currentUser.username,
+  }]))
+};
+
 let getMessageInfo = async function(messageQuery:any,setMessageArray: any){
   let response: any = await getDocs(messageQuery);
   response.docs.map((r:any)=>{
-    setMessageArray([{
+    setMessageArray((prev:any)=>prev.concat([{
       channel: r.data().channel,
       text: r.data().text,
       user: r.data().user,
       username: r.data().username,
-    }])
+    }]))
   })
 }
 
 let getMessages = function(selectedChannel: string, setMessageArray: any){
-  //populate messageArray with doc ids
   let messageQuery = query(collection(database,'messages'),where('channel','==',selectedChannel));
   getMessageInfo(messageQuery,setMessageArray);
 }
@@ -103,16 +120,15 @@ let getMessages = function(selectedChannel: string, setMessageArray: any){
 let getChannelInfo = async function(channelQuery:any,setChannelArray: any){
   let response:any = await getDocs(channelQuery);
   response.docs.map((r:any)=>{
-    setChannelArray([{
+    setChannelArray((prev:any)=>prev.concat([{
       channelName: r.data().channelName,
       messageArray: r.data().messageArray,
       userArray: r.data().userArray,
-    }])
+    }]))
   })
 };
 
 let getChannels = function(user: any,setChannelArray:any){
-  //populate channelArray with doc ids
   user.joinedChannels.forEach((channelDocID: string)=>{
     let channelQuery = query(collection(database,'channels'), where('__name__','==',channelDocID));
     getChannelInfo(channelQuery,setChannelArray);

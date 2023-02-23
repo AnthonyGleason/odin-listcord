@@ -8,16 +8,16 @@ import User from '../classes/User';
 const auth = getAuth(app)
 
 export default function SignUp({currentUser,setCurrentUser}:any){
-  const [userInput,setUserInput] = useState('');
+  const [emailInput,setEmailInput] = useState('');
   const [passInput,setPassInput] = useState('');
 
   return(
     <div className="app">
       <form>
-        <input value={userInput} onChange={(e)=>{setUserInput(e.target.value)}} placeholder='username' />
+        <input value={emailInput} onChange={(e)=>{setEmailInput(e.target.value)}} placeholder='email' />
         <input value={passInput} onChange={(e)=>{setPassInput(e.target.value)}} placeholder='password' />
-        <button onClick={()=>{handleSignIn(userInput,passInput,false,setCurrentUser)}} type='button'>Sign In</button>
-        <button onClick={()=>{handleSignIn(userInput,passInput,true,setCurrentUser)}} type='button'>Sign Up</button>
+        <button onClick={()=>{handleSignIn(emailInput,passInput,false,setCurrentUser)}} type='button'>Sign In</button>
+        <button onClick={()=>{handleSignIn(emailInput,passInput,true,setCurrentUser)}} type='button'>Sign Up</button>
         <button onClick={()=>{handleSignIn('demouser@demouser.com','demouser',false,setCurrentUser)}} type='button'>Use Demo User</button>
       </form>
     </div>
@@ -33,9 +33,17 @@ let handleSignIn = async function(user: string,pass: string,register:boolean,set
     //create a new user
     login = await createUserWithEmailAndPassword(auth,user,pass);
     //create a doc in the users collection for this new user
+    //additionally places the user in the five default channels
     addDoc(userRef,{
       UID: login.user.uid,
-      joinedChannels: [],
+      joinedChannels: [
+        'wOq682g5srPDK84kRZd4',
+        '4TS38wkc58XPYdL5WsGK',
+        'zYBY0LtMC4FKNytr1zUv',
+        'rsW9udjAB1Co9O4FKOtG',
+        'e5oIsMpFL9gwcQ0MZosb',
+        '8wEKS2Cf70S3ERPmmWqo',
+      ],
       sentMessages: [],
       username: login.user.email,
     });
